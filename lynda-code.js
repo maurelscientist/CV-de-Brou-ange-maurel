@@ -14,6 +14,28 @@
     const K = window.AGENT_KNOWLEDGE;
     const RAG = window.AGENT_RAG;
 
+    /* ---------- Téléchargement du CV ----------
+       Force un vrai téléchargement (et non un simple affichage dans
+       l'onglet) en récupérant le fichier puis en créant un objet Blob
+       avec un lien portant l'attribut download. */
+    const downloadCV = () => {
+        const url = K.cv.chemin;
+        const nom = K.cv.nomFichier || 'CV.pdf';
+        fetch(url)
+            .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.blob(); })
+            .then(blob => {
+                const a = document.createElement('a');
+                const objUrl = URL.createObjectURL(blob);
+                a.href = objUrl;
+                a.download = nom;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                setTimeout(() => URL.revokeObjectURL(objUrl), 1000);
+            })
+            .catch(() => { window.open(url, '_blank'); });
+    };
+
     /* ---------- Configuration LLM ----------
        Le LLM est servi par le backend Python (backend/server.py),
        qui proxyfie OpenRouter. La clé API reste côté serveur,
@@ -933,7 +955,7 @@
             case 'cv':
                 // On ne télécharge PAS directement : on propose un bouton.
                 return {
-                    text: '📄 Voici le CV de Maurel Brou. Cliquez sur le bouton ci-dessous pour le télécharger.',
+                    text: '📄 Voici le CV de Brou Amoïkon Richard Ange Maurel. Cliquez sur le bouton ci-dessous pour le télécharger.',
                     cvButton: true
                 };
             case 'projets':
@@ -1869,7 +1891,7 @@ Utilise ces composants quand ils améliorent la clarté (ex. comparer deux API e
                 btn.className = 'ai-agent__cv-btn';
                 btn.textContent = '📥 Télécharger le CV';
                 btn.type = 'button';
-                btn.addEventListener('click', () => { window.open(K.cv.chemin, '_blank'); });
+                btn.addEventListener('click', downloadCV);
                 streamEl.appendChild(btn);
             }
             streamEl = null; state.busy = false; state.aborted = false; setGenerating(false);
