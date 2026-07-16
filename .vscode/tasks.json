@@ -1,0 +1,53 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Démarrer le backend Lynda (IA)",
+      "type": "shell",
+      "command": "node server.js",
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "isBackground": true,
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      },
+      "detail": "Lance le serveur Node.js du backend Lynda (IA Groq) sur le port 5000. À garder actif pendant l'utilisation du portfolio."
+    },
+    {
+      "label": "Démarrer le mock Langfuse (traces)",
+      "type": "shell",
+      "command": "node langfuse-mock.js",
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "group": "none",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      },
+      "detail": "Mock Langfuse local (port 3000) servant l'API publique consommée par l'extension VS Code Langfuse Traces. Lit backend/llm-traces.log."
+    },
+    {
+      "label": "Démarrer le backend Lynda + Langfuse",
+      "type": "shell",
+      "command": "set LANGFUSE_PUSH=1 && node server.js",
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "group": "none",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      },
+      "detail": "Backend Lynda avec envoi des traces vers le mock Langfuse (LANGFUSE_PUSH=1). Démarrer d'abord la tâche 'Démarrer le mock Langfuse (traces)'."
+    }
+  ]
+}

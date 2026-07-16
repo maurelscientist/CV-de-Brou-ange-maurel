@@ -1,0 +1,17 @@
+# Secrets / variables d'environnement locaux
+backend/.env
+.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node
+node_modules/
+*.tgz
+
+# Logs
+*.log
+backend/server.err

@@ -1,0 +1,68 @@
+=========================================================
+  TEXTE DE PRÉSENTATION — MAUREL BROU (À PROPOS)
+  À intégrer dans la section « À propos » du portfolio
+=========================================================
+
+Titre suggéré : « À propos de moi »
+
+---------------------------------------------------------
+VERSION COURTE (accroche, ~40 mots)
+---------------------------------------------------------
+Je m'appelle Brou Amoikon Richard Ange-Maurel, étudiant en
+MIAGE et développeur web & mobile. Spécialiste en Business
+Intelligence, je transforme les données en décisions et les
+idées en solutions numériques concrètes.
+
+---------------------------------------------------------
+VERSION MOYENNE (intro section, ~90 mots)
+---------------------------------------------------------
+Aventurier MIAGE avec un flair pour le code et une passion
+pour les révolutions numériques, je conçois des sites web,
+des applications mobiles et des solutions data sur mesure.
+
+Mon terrain de jeu ? La Business Intelligence et l'automatisation.
+Je crois que la technologie ne doit pas seulement impressionner :
+elle doit résoudre de vrais problèmes. C'est pourquoi chaque
+projet que je mène vise un impact réel — pour les entreprises
+comme pour les communautés.
+
+---------------------------------------------------------
+VERSION LONGUE (page À propos complète, ~180 mots)
+---------------------------------------------------------
+Bonjour ! Je suis Brou Amoikon Richard Ange-Maurel, plus
+souvent appelé Ange-Maurel. Étudiant en MIAGE (Méthodes
+Informatiques Appliquées à la Gestion des Entreprises), je
+me spécialise dans le développement web & mobile et la
+Business Intelligence.
+
+Ma conviction est simple : derrière chaque ligne de code,
+il y a une décision à éclairer et une vie à simplifier.
+C'est ce qui me pousse à explorer autant le back-end
+(architectures, API, sécurité) que l'analyse de données
+et l'UI/UX design.
+
+Au fil de mes projets — de Previsi-Q à Ornifly, en passant
+par UPB Connect et Orange Success — j'ai appris à jongler
+entre rigueur académique et agilité de terrain. Je travaille
+avec des outils modernes (React, Flutter, Supabase, Node.js)
+et les assistants IA qui accélèrent la création.
+
+Ouvert aux missions freelance, stages et partenariats, je
+suis toujours prêt pour un nouveau défi numérique. Et si
+vous avez une question, mon assistante Lynda est là pour
+vous guider à tout moment.
+
+---------------------------------------------------------
+BIO POUR L'ASSISTANTE LYNDA (à copier dans agent-data.js)
+---------------------------------------------------------
+"Je suis Brou Amoikon Richard Ange-Maurel, étudiant en MIAGE
+et développeur web & mobile passionné par la Business
+Intelligence et les révolutions numériques. Je conçois des
+sites, applications et solutions data qui transforment les
+données en décisions concrètes."
+
+---------------------------------------------------------
+LIGNE POUR LE FOOTER / HERO (une phrase)
+---------------------------------------------------------
+"Étudiant MIAGE · Développeur web & mobile · Spécialiste
+Business Intelligence — je transforme vos données en décisions."

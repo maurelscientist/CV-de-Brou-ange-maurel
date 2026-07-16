@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio de Brou Amoikon Richard Ange-Maurel — Étudiant en MIAGE, développeur web et mobile.">
+    <title>Brou Amoikon Richard Ange-Maurel — Portfolio</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90' font-family='monospace'%3E%26lt;/%26gt;%3C/text%3E%3C/svg%3E">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Mode développeur : coloration syntaxique (highlight.js) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/atom-one-dark.min.css">
+    <!-- Mode développeur : LaTeX (KaTeX) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css?v=20260716-bot-white">
+</head>
+<body>
+
+    <!-- ========== SPLASH SCREEN ========== -->
+    <div class="splash-screen" id="splashScreen" aria-hidden="true">
+        <div class="splash-inner">
+            <div class="splash-logo">
+                <span class="splash-bracket">&lt;</span><span class="splash-name">Ange-Maurel</span><span class="splash-bracket">/&gt;</span>
+            </div>
+            <div class="splash-spinner" aria-hidden="true"></div>
+            <div class="splash-tag">Chargement de l'expérience…</div>
+        </div>
+    </div>
+
+    <!-- ========== HEADER / NAVBAR ========== -->
+    <header id="mainNav" class="navbar navbar-expand-lg fixed-top custom-navbar">
+        <div class="container">
+            <a class="navbar-brand logo" href="#home">
+                <span class="logo-bracket">&lt;</span><span class="logo-name">Ange-Maurel</span><span class="logo-bracket">/&gt;</span>
+            </a>
+            <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link" href="#home">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">Projets</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#parcours">Parcours</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills">Compétences</a></li>
+                    <li class="nav-item agent-trigger__item">
+                        <button class="agent-trigger" id="agentTrigger" type="button" aria-label="Ouvrir Lynda, l'assistante IA" aria-expanded="false">
+                            <span class="agent-trigger__avatar">
+                                <span class="agent-trigger__letter">L</span>
+                            </span>
+                            <span class="agent-trigger__pulse"></span>
+                        </button>
+                        <span class="agent-trigger__bubble" id="agentBubble" role="status">
+                            <span class="agent-trigger__bubble-text">Discuter avec l'assistante IA Lynda pour en savoir plus</span>
+                            <span class="agent-trigger__bubble-close" id="agentBubbleClose" aria-label="Fermer">&times;</span>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== HERO ========== -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-5 order-lg-1 order-2" data-aos="fade-right" data-aos-duration="1000">
+                    <div class="hero-photo-wrap">
+                        <div class="hero-photo-frame">
+                            <img src="pthoto/photo.jpeg" alt="Brou Amoikon Richard Ange-Maurel" class="hero-photo">
+                            <div class="hero-photo-overlay"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="col-lg-7 order-lg-2 order-1" data-aos="fade-left" data-aos-duration="1000">
+                    <div class="hero-content">
+                        <span class="hero-greeting"><span class="dot"></span> Bonjour, moi c'est</span>
+                        <h1 class="hero-title">
+                            <span class="hero-firstname">Brou Amoikon Richard</span>
+                            <span class="hero-lastname">Ange-Maurel</span>
+                        </h1>
+                        <p class="hero-subtitle">
+                            <span class="typed" data-typed-items="Aventurier MIAGE., Développeur web & mobile., Passionné de révolutions numériques."></span>
+                        </p>
+                        <p class="hero-tagline">« Aventurier MIAGE avec un flair pour le code et une passion pour les révolutions numériques ! »</p>
+                        <div class="hero-cta">
+                            <a href="#projects" class="btn btn-primary-custom">
+                                <span>Mes projets</span>
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                            <a href="#faq" class="btn btn-outline-custom">
+                                <i class="bi bi-question-circle"></i>
+                                <span>Questions</span>
+                            </a>
+                        </div>
+                        <div class="hero-meta">
+                            <div class="meta-item">
+                                <span class="meta-num">04+</span>
+                                <span class="meta-label">Projets</span>
+                            </div>
+                            <div class="meta-divider"></div>
+                            <div class="meta-item">
+                                <span class="meta-num">9+</span>
+                                <span class="meta-label">Compétences</span>
+                            </div>
+                            <div class="meta-divider"></div>
+                            <div class="meta-item">
+                                <span class="meta-num">2</span>
+                                <span class="meta-label">Diplômes</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SERVICES ========== -->
+    <section id="services" class="section services-section">
+        <div class="container">
+            <div class="section-head" data-aos="fade-up">
+                <span class="section-eyebrow">// Ce que je fais</span>
+                <h2 class="section-title">Services</h2>
+                <p class="section-subtitle">Trois piliers d'expertise au service de vos projets numériques.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="bi bi-window"></i>
+                            <span class="service-num">01</span>
+                        </div>
+                        <h3 class="service-title">Développement d'applications</h3>
+                        <p class="service-desc">Conception de sites web et applications mobiles, automatisation des processus et optimisation de la gestion pour des solutions sur mesure.</p>
+                        <ul class="service-list">
+                            <li><i class="bi bi-arrow-return-right"></i> Sites vitrines & e-commerce</li>
+                            <li><i class="bi bi-arrow-return-right"></i> Applications mobiles iOS / Android</li>
+                            <li><i class="bi bi-arrow-return-right"></i> Automatisation de processus</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="bi bi-bar-chart-line"></i>
+                            <span class="service-num">02</span>
+                        </div>
+                        <h3 class="service-title">Business Intelligence</h3>
+                        <p class="service-desc">Tableaux de bord, analyse de données et aide à la décision pour transformer vos données brutes en leviers stratégiques.</p>
+                        <ul class="service-list">
+                            <li><i class="bi bi-arrow-return-right"></i> Dashboards interactifs</li>
+                            <li><i class="bi bi-arrow-return-right"></i> Analyse & visualisation</li>
+                            <li><i class="bi bi-arrow-return-right"></i> Aide à la décision</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="bi bi-server"></i>
+                            <span class="service-num">03</span>
+                        </div>
+                        <h3 class="service-title">Back-end Development</h3>
+                        <p class="service-desc">API performantes, bases de données robustes, sécurité renforcée et architecture scalable pour des fondations solides.</p>
+                        <ul class="service-list">
+                            <li><i class="bi bi-arrow-return-right"></i> API RESTful & GraphQL</li>
+                            <li><i class="bi bi-arrow-return-right"></i> Architecture & sécurité</li>
+                            <li><i class="bi bi-arrow-return-right"></i> Performance & scalabilité</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== PROJETS ========== -->
+    <section id="projects" class="section projects-section">
+        <div class="container">
+            <div class="section-head" data-aos="fade-up">
+                <span class="section-eyebrow">// Mes réalisations</span>
+                <h2 class="section-title">Projets</h2>
+                <p class="section-subtitle">Une sélection de projets où le design rencontre la technique.</p>
+            </div>
+
+            <!-- Project 1 — Previsi-Q -->
+            <div class="project-row" data-aos="fade-up">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-7">
+                        <div class="project-media">
+                            <div id="carouselPrevisiQ" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-indicators custom-indicators">
+                                    <button type="button" data-bs-target="#carouselPrevisiQ" data-bs-slide-to="0" class="active" aria-current="true"></button>
+                                    <button type="button" data-bs-target="#carouselPrevisiQ" data-bs-slide-to="1"></button>
+                                    <button type="button" data-bs-target="#carouselPrevisiQ" data-bs-slide-to="2"></button>
+                                    <button type="button" data-bs-target="#carouselPrevisiQ" data-bs-slide-to="3"></button>
+                                    <button type="button" data-bs-target="#carouselPrevisiQ" data-bs-slide-to="4"></button>
+                                </div>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="previsiq/Capture d'écran 2026-07-04 110908.png" class="d-block w-100" alt="Previsi-Q 1">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="previsiq/Capture d'écran 2026-07-04 110939.png" class="d-block w-100" alt="Previsi-Q 2">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="previsiq/Capture d'écran 2026-07-04 111006.png" class="d-block w-100" alt="Previsi-Q 3">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="previsiq/Capture d'écran 2026-07-04 111919.png" class="d-block w-100" alt="Previsi-Q 4">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="previsiq/Capture d'écran 2026-07-04 111945.png" class="d-block w-100" alt="Previsi-Q 5">
+                                    </div>
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselPrevisiQ" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Précédent</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselPrevisiQ" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Suivant</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="project-info">
+                            <span class="project-tag">Web Platform · BI</span>
+                            <h3 class="project-title">Previsi-Q</h3>
+                            <p class="project-desc">Plateforme ivoirienne de prévisions financières et d'intelligence économique destinée aux PME de l'UEMOA. Une solution pensée pour aider les entrepreneurs à anticiper et décider.</p>
+                            <ul class="project-features">
+                                <li><i class="bi bi-check2"></i> Prévisions financières</li>
+                                <li><i class="bi bi-check2"></i> Intelligence économique</li>
+                                <li><i class="bi bi-check2"></i> Ciblé PME UEMOA</li>
+                            </ul>
+                            <div class="project-actions">
+                                <a href="https://previsi-q.com" target="_blank" rel="noopener" class="btn btn-primary-custom">
+                                    <span>Visiter le site</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right-square-fill" viewBox="0 0 16 16">
+                                      <path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zM5.904 10.803 10 6.707v2.768a.5.5 0 0 0 1 0V5.5a.5.5 0 0 0-.5-.5H6.525a.5.5 0 1 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 .707.707"/>
+                                    </svg>
+                                </a>
+                                <a href="projet-previsiq.html" class="btn btn-outline-custom project-action-btn">En savoir plus</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider" data-aos="fade"></div>
+
+            <!-- Project 2 — UPB Connect -->
+            <div class="project-row" data-aos="fade-up">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-5 order-lg-1 order-2">
+                        <div class="project-info">
+                            <span class="project-tag">Mobile App · Flutter</span>
+                            <h3 class="project-title">UPB Connect</h3>
+                            <p class="project-desc">Application mobile pour étudiants de l'Université Polytechnique de Bingerville — accès aux cours, actualités universitaires et vie du campus. <em>(Projet scolaire)</em></p>
+                            <ul class="project-features">
+                                <li><i class="bi bi-check2"></i> Consultation des cours</li>
+                                <li><i class="bi bi-check2"></i> Actualités universitaires</li>
+                                <li><i class="bi bi-check2"></i> Expérience étudiante</li>
+                            </ul>
+                            <a href="projet-upb-connect.html" class="btn btn-outline-custom project-action-btn">En savoir plus</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 order-lg-2 order-1">
+                        <div class="project-media video-frame">
+                            <div class="video-wrapper">
+                                <video controls preload="metadata">
+                                    <source src="UPB CONNECT/video UPB CONNECT.mp4" type="video/mp4">
+                                    Votre navigateur ne supporte pas la lecture vidéo.
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider" data-aos="fade"></div>
+
+            <div class="project-row" data-aos="fade-up">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-7">
+                        <div class="project-media">
+                            <div id="carouselVirtualCarController" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-indicators custom-indicators">
+                                    <button type="button" data-bs-target="#carouselVirtualCarController" data-bs-slide-to="0" class="active" aria-current="true"></button>
+                                    <button type="button" data-bs-target="#carouselVirtualCarController" data-bs-slide-to="1"></button>
+                                    <button type="button" data-bs-target="#carouselVirtualCarController" data-bs-slide-to="2"></button>
+                                    <button type="button" data-bs-target="#carouselVirtualCarController" data-bs-slide-to="3"></button>
+                                    <button type="button" data-bs-target="#carouselVirtualCarController" data-bs-slide-to="4"></button>
+                                </div>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="Virtual Car Controller/1.png" class="d-block w-100" alt="Virtual Car Controller 1">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="Virtual Car Controller/2.png" class="d-block w-100" alt="Virtual Car Controller 2">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="Virtual Car Controller/3.png" class="d-block w-100" alt="Virtual Car Controller 3">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="Virtual Car Controller/4.png" class="d-block w-100" alt="Virtual Car Controller 4">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="Virtual Car Controller/5.png" class="d-block w-100" alt="Virtual Car Controller 5">
+                                    </div>
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselVirtualCarController" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Précédent</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselVirtualCarController" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Suivant</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="project-info">
+                            <span class="project-tag">Mobile App · Bluetooth / IoT</span>
+                            <h3 class="project-title">Virtual Car Controller</h3>
+                            <p class="project-desc">Virtual Car Controller est une application innovante permettant de diriger n’importe quelle voiture équipée du module Bluetooth HC‑05. Grâce à son interface moderne et intuitive, l’utilisateur peut contrôler le véhicule de trois manières.</p>
+                            <ul class="project-features">
+                                <li><i class="bi bi-check2"></i> Joystick virtuel pour la direction et la vitesse</li>
+                                <li><i class="bi bi-check2"></i> Commandes vocales pour une interaction mains libres</li>
+                                <li><i class="bi bi-check2"></i> Interface tactile pour un pilotage simple et précis</li>
+                            </ul>
+                            <a href="projet-virtual-car-controller.html" class="btn btn-outline-custom project-action-btn">En savoir plus</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider" data-aos="fade"></div>
+
+            <!-- Project 4 — Orange Success -->
+            <div class="project-row" data-aos="fade-up">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-5 order-lg-1 order-2">
+                        <div class="project-info">
+                            <span class="project-tag">Design Sprint · Inclusion Numérique</span>
+                            <h3 class="project-title">Orange Success</h3>
+                            <p class="project-desc">Projet développé lors du Design Sprint universitaire en Côte d’Ivoire, Orange Success permet aux étudiants d’accéder à des avantages sur les pass internet Orange afin de suivre plus facilement leurs cours en ligne et leurs activités académiques. Cette initiative favorise l’inclusion numérique, soutient la réussite universitaire et illustre l’impact des solutions digitales au service de l’éducation.</p>
+                            <ul class="project-features">
+                                <li><i class="bi bi-check2"></i> Accès simplifié aux avantages Orange</li>
+                                <li><i class="bi bi-check2"></i> Soutien à la continuité des études</li>
+                                <li><i class="bi bi-check2"></i> Inclusion numérique et réussite académique</li>
+                            </ul>
+                            <div class="project-actions">
+                                <a href="https://orange-success-ci.netlify.app/" target="_blank" rel="noopener" class="btn btn-primary-custom">
+                                    <span>Visiter le site</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right-square-fill" viewBox="0 0 16 16">
+                                      <path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zM5.904 10.803 10 6.707v2.768a.5.5 0 0 0 1 0V5.5a.5.5 0 0 0-.5-.5H6.525a.5.5 0 1 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 .707.707"/>
+                                    </svg>
+                                </a>
+                                <a href="projet-orange-success.html" class="btn btn-outline-custom project-action-btn">En savoir plus</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 order-lg-2 order-1">
+                        <div class="project-media">
+                            <img src="Orange Success/orange.png" class="d-block w-100" alt="Orange Success preview">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider" data-aos="fade"></div>
+
+            <!-- Project 5 — Ornifly -->
+            <div class="project-row" data-aos="fade-up">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-7">
+                        <div class="project-media video-frame">
+                            <div class="video-wrapper">
+                                <video controls preload="metadata">
+                                    <source src="ORNIFLY/Vidéo ornifly.mp4" type="video/mp4">
+                                    Votre navigateur ne supporte pas la lecture vidéo.
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="project-info">
+                            <span class="project-tag">Web App · Booking</span>
+                            <h3 class="project-title">Ornifly</h3>
+                            <p class="project-desc">Site web de réservation de billets d'avion avec recherche, consultation et réservation en ligne. Une interface claire pour un parcours fluide. <em>(Projet scolaire)</em></p>
+                            <ul class="project-features">
+                                <li><i class="bi bi-check2"></i> Recherche de vols</li>
+                                <li><i class="bi bi-check2"></i> Réservation en ligne</li>
+                                <li><i class="bi bi-check2"></i> Gestion des billets</li>
+                            </ul>
+                            <a href="projet-ornifly.html" class="btn btn-outline-custom project-action-btn">En savoir plus</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========== PARCOURS ========== -->
+    <section id="parcours" class="section parcours-section">
+        <div class="container">
+            <div class="section-head" data-aos="fade-up">
+                <span class="section-eyebrow">// Mon cheminement</span>
+                <h2 class="section-title">Parcours</h2>
+                <p class="section-subtitle">Les étapes qui ont forgé mon parcours académique.</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-line"></div>
+
+                <div class="timeline-item" data-aos="fade-up">
+                    <div class="timeline-dot"><i class="bi bi-mortarboard-fill"></i></div>
+                    <div class="timeline-card">
+                        <span class="timeline-date">En cours</span>
+                        <h3 class="timeline-title">Licence 2 — MIAGE</h3>
+                        <p class="timeline-school">Université Polytechnique de Bingerville</p>
+                        <p class="timeline-desc">Méthodes Informatiques Appliquées à la Gestion d'Entreprise — spécialisation développement et systèmes d'information.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="timeline-dot"><i class="bi bi-book-fill"></i></div>
+                    <div class="timeline-card">
+                        <span class="timeline-date">2023 — 2024</span>
+                        <h3 class="timeline-title">Licence 1 — MIAGE</h3>
+                        <p class="timeline-school">Université Polytechnique de Bingerville</p>
+                        <p class="timeline-desc">Acquisition des fondamentaux en algorithmique, programmation, bases de données et gestion d'entreprise.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="timeline-dot"><i class="bi bi-pencil-square"></i></div>
+                    <div class="timeline-card">
+                        <span class="timeline-date">2023</span>
+                        <h3 class="timeline-title">Baccalauréat — Série D</h3>
+                        <p class="timeline-school">Lycée Moderne de Marcory</p>
+                        <p class="timeline-desc">Diplôme du baccalauréat scientifique, premier pas vers l'univers du numérique et de la technologie.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== COMPÉTENCES ========== -->
+    <section id="skills" class="section skills-section">
+        <div class="container">
+            <div class="section-head" data-aos="fade-up">
+                <span class="section-eyebrow">// Mon arsenal technique</span>
+                <h2 class="section-title">Compétences</h2>
+                <p class="section-subtitle">Technologies et outils que j'utilise au quotidien.</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-12">
+                    <div class="skills-grid">
+                        <article class="skill-card" tabindex="0" data-aos="fade-up" data-aos-delay="50">
+                            <div class="skill-icon">
+                                <img src="https://cdn.jsdelivr.net/npm/devicon@2.14.0/icons/php/php-original.svg" alt="Logo PHP" class="skill-icon-svg" loading="lazy">
+                            </div>
+                            <div class="skill-value">85%</div>
+                            <div class="skill-name">PHP</div>
+                        </article>
+                        <article class="skill-card" tabindex="0" data-aos="fade-up" data-aos-delay="100">
+                            <div class="skill-icon">
+                                <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/laravel.svg" alt="Logo Laravel" class="skill-icon-svg" loading="lazy">
+                            </div>
+                            <div class="skill-value">80%</div>
+                            <div class="skill-name">Laravel</div>
+                        </article>
+                        <article class="skill-card" tabindex="0" data-aos="fade-up" data-aos-delay="150">
+                            <div class="skill-icon">
+                                <img src="https://cdn.jsdelivr.net/npm/devicon@2.14.0/icons/flutter/flutter-original.svg" alt="Logo Flutter" class="skill-icon-svg" loading="lazy">
+                            </div>
+                            <div class="skill-value">85%</div>
+                            <div class="skill-name">Flutter</div>
+                        </article>
+                        <article class="skill-card" tabindex="0" data-aos="fade-up" data-aos-delay="200">
+                            <div class="skill-icon">
+                                <img src="https://cdn.jsdelivr.net/npm/devicon@2.14.0/icons/dart/dart-original.svg" alt="Logo Dart" class="skill-icon-svg" loading="lazy">
+                            </div>
+                            <div class="skill-value">89%</div>
+                            <div class="skill-name">Dart</div>
+                        </article>
+                        <article class="skill-card" tabindex="0" data-aos="fade-up" data-aos-delay="250">
+                            <div class="skill-icon">
+                                <img src="https://cdn.jsdelivr.net/npm/devicon@2.14.0/icons/javascript/javascript-original.svg" alt="Logo JavaScript" class="skill-icon-svg" loading="lazy">
+                            </div>
+                            <div class="skill-value">93%</div>
+                            <div class="skill-name">JavaScript</div>
+                        </article>
+                        <article class="skill-card" tabindex="0" data-aos="fade-up" data-aos-delay="300">
+                            <div class="skill-icon">
+                                <img src="https://cdn.jsdelivr.net/npm/devicon@2.14.0/icons/python/python-original.svg" alt="Logo Python" class="skill-icon-svg" loading="lazy">
+                            </div>
+                            <div class="skill-value">85%</div>
+                            <div class="skill-name">Python</div>
+                        </article>
+                        <article class="skill-card" tabindex="0" data-aos="fade-up" data-aos-delay="350">
+                            <div class="skill-icon">
+                                <img src="https://cdn.jsdelivr.net/npm/devicon@2.14.0/icons/mysql/mysql-original.svg" alt="Logo MySQL" class="skill-icon-svg" loading="lazy">
+                            </div>
+                            <div class="skill-value">94%</div>
+                            <div class="skill-name">MySQL</div>
+                        </article>
+                        <article class="skill-card" tabindex="0" data-aos="fade-up" data-aos-delay="400">
+                            <div class="skill-icon">
+                                <img src="https://cdn.jsdelivr.net/npm/devicon@2.14.0/icons/postgresql/postgresql-original.svg" alt="Logo PostgreSQL" class="skill-icon-svg" loading="lazy">
+                            </div>
+                            <div class="skill-value">75%</div>
+                            <div class="skill-name">PostgreSQL</div>
+                        </article>
+                        <article class="skill-card" tabindex="0" data-aos="fade-up" data-aos-delay="450">
+                            <div class="skill-icon">
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="skill-icon-svg" aria-label="Logo Canva">
+                                    <title>Canva</title>
+                                    <path fill="#00c4cc" d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zM6.962 7.68c.754 0 1.337.549 1.405 1.2.069.583-.171 1.097-.822 1.406-.343.171-.48.172-.549.069-.034-.069 0-.137.069-.206.617-.514.617-.926.548-1.508-.034-.378-.308-.618-.583-.618-1.2 0-2.914 2.674-2.674 4.629.103.754.549 1.646 1.437 1.646.344 0 .724-.103 1.085-.248.444-.176.784-.414 1.148-.724.35-.297.734-.38 1.167-.298.56.115 1.034.603 1.045 1.196.018 1.01-1.375 2.221-2.905 2.283-1.557.065-2.875-.828-3.34-2.334-.538-1.777.276-4.876 2.311-4.876zM17.334 7.68c.754 0 1.337.549 1.405 1.2.069.583-.171 1.097-.822 1.406-.343.171-.48.172-.549.069-.034-.069 0-.137.069-.206.617-.514.617-.926.548-1.508-.034-.378-.308-.618-.583-.618-1.2 0-2.914 2.674-2.674 4.629.103.754.549 1.646 1.437 1.646.344 0 .724-.103 1.085-.248.444-.176.784-.414 1.148-.724.35-.297.734-.38 1.167-.298.56.115 1.034.603 1.045 1.196.018 1.01-1.375 2.221-2.905 2.283-1.557.065-2.875-.828-3.34-2.334-.538-1.777.276-4.876 2.311-4.876z"/>
+                                </svg>
+                            </div>
+                            <div class="skill-value">70%</div>
+                            <div class="skill-name">Canva</div>
+                        </article>
+                        <article class="skill-card" tabindex="0" data-aos="fade-up" data-aos-delay="500">
+                            <div class="skill-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" class="skill-icon-svg" aria-label="Logo Figma">
+                                    <title>Figma</title>
+                                    <path fill="#0acf83" d="M45.5 129c11.9 0 21.5-9.6 21.5-21.5V86H45.5C33.6 86 24 95.6 24 107.5S33.6 129 45.5 129zm0 0"/>
+                                    <path fill="#a259ff" d="M24 64.5C24 52.6 33.6 43 45.5 43H67v43H45.5C33.6 86 24 76.4 24 64.5zm0 0"/>
+                                    <path fill="#f24e1e" d="M24 21.5C24 9.6 33.6 0 45.5 0H67v43H45.5C33.6 43 24 33.4 24 21.5zm0 0"/>
+                                    <path fill="#ff7262" d="M67 0h21.5C100.4 0 110 9.6 110 21.5S100.4 43 88.5 43H67zm0 0"/>
+                                    <path fill="#1abcfe" d="M110 64.5c0 11.9-9.6 21.5-21.5 21.5S67 76.4 67 64.5 76.6 43 88.5 43 110 52.6 110 64.5zm0 0"/>
+                                </svg>
+                            </div>
+                            <div class="skill-value">40%</div>
+                            <div class="skill-name">Figma</div>
+                        </article>
+                        <article class="skill-card" tabindex="0" data-aos="fade-up" data-aos-delay="550">
+                            <div class="skill-icon">
+                                <img src="https://cdn.jsdelivr.net/npm/devicon@2.14.0/icons/css3/css3-original.svg" alt="Logo CSS" class="skill-icon-svg" loading="lazy">
+                            </div>
+                            <div class="skill-value">90%</div>
+                            <div class="skill-name">CSS</div>
+                        </article>
+                        <article class="skill-card" tabindex="0" data-aos="fade-up" data-aos-delay="575">
+                            <div class="skill-icon">
+                                <img src="https://cdn.jsdelivr.net/npm/devicon@2.14.0/icons/bootstrap/bootstrap-original.svg" alt="Logo Bootstrap" class="skill-icon-svg" loading="lazy">
+                            </div>
+                            <div class="skill-value">85%</div>
+                            <div class="skill-name">Bootstrap</div>
+                        </article>
+                        <article class="skill-card" tabindex="0" data-aos="fade-up" data-aos-delay="600">
+                            <div class="skill-icon">
+                                <img src="https://cdn.jsdelivr.net/npm/devicon@2.14.0/icons/html5/html5-original.svg" alt="Logo HTML" class="skill-icon-svg" loading="lazy">
+                            </div>
+                            <div class="skill-value">90%</div>
+                            <div class="skill-name">HTML</div>
+                        </article>
+                        <article class="skill-card" tabindex="0" data-aos="fade-up" data-aos-delay="650">
+                            <div class="skill-icon">
+                                <img src="https://cdn.jsdelivr.net/npm/devicon@2.14.0/icons/github/github-original.svg" alt="Logo GitHub" class="skill-icon-svg" loading="lazy">
+                            </div>
+                            <div class="skill-value">50%</div>
+                            <div class="skill-name">GitHub</div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FAQ ========== -->
+    <section id="faq" class="section faq-section">
+        <div class="container">
+            <div class="section-head" data-aos="fade-up">
+                <span class="section-eyebrow">// Questions fréquentes</span>
+                <h2 class="section-title">FAQ</h2>
+                <p class="section-subtitle">Quelques réponses aux questions qu'on me pose souvent.</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-9" data-aos="fade-up" data-aos-delay="100">
+                    <div class="accordion custom-accordion" id="faqAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    <span class="faq-num">01</span> Qui suis-je ?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Je suis étudiant en MIAGE, spécialisé dans le développement web et mobile, avec une passion pour la création de solutions numériques adaptées aux besoins des entreprises.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    <span class="faq-num">02</span> Quels services je propose ?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Développement d'applications, administration systèmes et réseaux, business intelligence, automatisation des processus et gestion de projets informatiques.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    <span class="faq-num">03</span> Quels projets ai-je réalisés ?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Ornifly, UPB Connect et divers projets académiques et professionnels.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                    <span class="faq-num">04</span> Quelles sont mes compétences clés ?
+                                </button>
+                            </h2>
+                            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Programmation, bases de données, analyse de données, UI/UX et gestion de projet.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                    <span class="faq-num">05</span> Comment me contacter ?
+                                </button>
+                            </h2>
+                            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Via la section contact du portfolio, par email ou LinkedIn.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== BANDANU ANIMÉ PENCHÉ ========== -->
+    <div class="tilt-strip" aria-hidden="true">
+        <div class="tilt-strip__track">
+            <span class="tilt-strip__item">✺ Design</span>
+            <span class="tilt-strip__item">◆ Code</span>
+            <span class="tilt-strip__item">▲ Créativité</span>
+            <span class="tilt-strip__item">✦ Innovation</span>
+            <span class="tilt-strip__item">❖ MIAGE</span>
+            <span class="tilt-strip__item">✺ Web & Mobile</span>
+           
+            <span class="tilt-strip__item">▲ Passion</span>
+            <!-- duplication pour défilement continu -->
+            <span class="tilt-strip__item">✺ Design</span>
+            <span class="tilt-strip__item">◆ Code</span>
+            <span class="tilt-strip__item">▲ Créativité</span>
+            <span class="tilt-strip__item">✦ Innovation</span>
+            <span class="tilt-strip__item">❖ MIAGE</span>
+            <span class="tilt-strip__item">✺ Web & Mobile</span>
+            
+            <span class="tilt-strip__item">▲ Passion</span>
+        </div>
+    </div>
+
+    <!-- ========== AI TOOLS ========== -->
+    <section id="ai-tools" class="section ai-tools-section">
+        <div class="container">
+            <div class="ai-tools-content" data-aos="fade-up">
+                <h2 class="ai-tools-title">Je maîtrise également les outils modernes de l'<span class="accent">intelligence artificielle</span> et bien d'autres.</h2>
+                
+                <div class="ai-tools-grid">
+                    <!-- Certificate (Left) -->
+                    <div class="certificate-container" data-aos="fade-right" data-aos-delay="100">
+                        <div class="certificate-frame">
+                            <img src="assets/img/certificate.png" alt="Certificat Learn Prompting" class="certificate-image">
+                        </div>
+                    </div>
+
+                    <!-- Tools Vertical Span (Right) -->
+                    <div class="tools-vertical-container" data-aos="fade-left" data-aos-delay="100">
+                        <span class="tools-vertical-span">
+                            <span class="tool-vertical-item tool-claude" title="Claude">
+                                <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/anthropic.svg" alt="Claude" class="tool-logo-vertical" loading="lazy">
+                                <span class="tool-label-text">Claude</span>
+                            </span>
+                            <span class="tool-vertical-item tool-cursor" title="Cursor">
+                                <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/cursor.svg" alt="Cursor" class="tool-logo-vertical" loading="lazy">
+                                <span class="tool-label-text">Cursor</span>
+                            </span>
+                            <span class="tool-vertical-item tool-copilot" title="Copilot">
+                                <img src="https://unpkg.com/simple-icons@latest/icons/githubcopilot.svg" alt="Copilot" class="tool-logo-vertical" loading="lazy">
+                                <span class="tool-label-text">Copilot</span>
+                            </span>
+                            <span class="tool-vertical-item tool-supabase" title="Supabase">
+                                <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/supabase.svg" alt="Supabase" class="tool-logo-vertical" loading="lazy">
+                                <span class="tool-label-text">Supabase</span>
+                            </span>
+                            <span class="tool-vertical-item tool-firebase" title="Firebase">
+                                <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/firebase.svg" alt="Firebase" class="tool-logo-vertical" loading="lazy">
+                                <span class="tool-label-text">Firebase</span>
+                            </span>
+                            <span class="tool-vertical-item tool-chatgpt" title="ChatGPT">
+                                <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/openai.svg" alt="ChatGPT" class="tool-logo-vertical" loading="lazy">
+                                <span class="tool-label-text">ChatGPT</span>
+                            </span>
+                            <span class="tool-vertical-item tool-huggingface" title="Hugging Face">
+                                <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/huggingface.svg" alt="Hugging Face" class="tool-logo-vertical" loading="lazy">
+                                <span class="tool-label-text">Hugging Face</span>
+                            </span>
+                            <a class="tool-vertical-item tool-github" title="GitHub" href="https://github.com/maurelscientist/technologie-du-web-2.git" target="_blank" rel="noopener">
+                                <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/github.svg" alt="GitHub" class="tool-logo-vertical" loading="lazy">
+                                <span class="tool-label-text">GitHub</span>
+                            </a>
+                            <span class="tool-vertical-item tool-vercel" title="Vercel">
+                                <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/vercel.svg" alt="Vercel" class="tool-logo-vertical" loading="lazy">
+                                <span class="tool-label-text">Vercel</span>
+                            </span>
+                            <span class="tool-vertical-item tool-notion" title="Notion">
+                                <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/notion.svg" alt="Notion" class="tool-logo-vertical" loading="lazy">
+                                <span class="tool-label-text">Notion</span>
+                            </span>
+                            <span class="tool-vertical-item tool-gamma" title="Gamma">
+                                <img src="assets/img/gamma.svg" alt="Gamma" class="tool-logo-vertical" loading="lazy">
+                                <span class="tool-label-text">Gamma</span>
+                            </span>
+                            <span class="tool-vertical-item tool-deepl" title="DeepL">
+                                <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/deepl.svg" alt="DeepL" class="tool-logo-vertical" loading="lazy">
+                                <span class="tool-label-text">DeepL</span>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <div class="footer-divider" aria-hidden="true">
+        <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+            <path d="M0,50 C240,90 480,10 720,50 C960,90 1200,10 1440,50 V100 H0 Z"></path>
+        </svg>
+    </div>
+    <footer class="footer-wave" role="contentinfo">
+        <div class="container">
+            <div class="footer-wave__main-grid">
+                <div class="footer-wave__about">
+                    <h3 class="footer-wave__heading">Ange-Maurel</h3>
+                    <p>Portfolio de Brou Amoikon Richard Ange-Maurel . </p>
+                </div>
+                <div class="footer-wave__links">
+                    <h3 class="footer-wave__heading">Navigation</h3>
+                    <ul>
+                        <li><a href="#home">Accueil</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#projects">Projets</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-wave__links">
+                    <h3 class="footer-wave__heading">Projets</h3>
+                    <ul>
+                        <li><a href="#projects">Voir mes projets</a></li>
+                        <li><a href="#">Previsi-Q</a></li>
+                        <li><a href="#">UPB Connect</a></li>
+                    </ul>
+                </div>
+                <div class="footer-wave__links">
+                    <h3 class="footer-wave__heading">Ressources</h3>
+                    <ul>
+                        <li><a href="#faq">Questions fréquentes</a></li>
+                        <li><a href="mailto:maurelbrou040@gmail.com">Email</a></li>
+                    </ul>
+                </div>
+                <div class="footer-wave__newsletter">
+                    <h3 class="footer-wave__heading">Newsletter</h3>
+                    <p>Inscris ton email pour recevoir les dernières nouveautés et mises à jour de mes projets.</p>
+                    <form class="footer-newsletter-form" action="#" method="post">
+                        <input type="email" name="email" class="footer-newsletter-input" placeholder="Ton adresse email" aria-label="Adresse email" required>
+                        <button type="submit" class="footer-newsletter-button" aria-label="S'abonner">
+                            <span class="btn-label">S'abonner</span>
+                            <span class="btn-icon"><i class="bi bi-send"></i></span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-wave__bottom">
+                <p class="footer-wave__copyright">&copy; <span id="currentYear"></span> Brou Amoikon Richard Ange-Maurel · Conçu avec passion à Abidjan.</p>
+                <div class="footer-wave__social-links social-links">
+                    <a href="https://github.com/maurelscientist" target="_blank" rel="noopener" aria-label="GitHub" class="social-link"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/maurel-brou-9639b43a0?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener" aria-label="LinkedIn" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="mailto:maurelbrou040@gmail.com" aria-label="Email" class="social-link"><i class="bi bi-envelope"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== AGENT IA ========== -->
+    <div class="ai-agent" id="aiAgent" aria-hidden="true">
+        <div class="ai-agent__backdrop" data-close></div>
+        <div class="ai-agent__panel" role="dialog" aria-modal="true" aria-label="Lynda, assistante IA de Maurel Brou">
+            <header class="ai-agent__header">
+                <div class="ai-agent__id">
+                    <div class="ai-agent__meta">
+                        <span class="ai-agent__name">Lynda</span>
+                    </div>
+                </div>
+                <div class="ai-agent__actions">
+                    <button class="ai-agent__icon-btn" id="agentClose" type="button" aria-label="Fermer" data-close title="Fermer">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="ai-agent__body">
+                <div class="ai-agent__messages" id="agentMessages" aria-live="polite"></div>
+
+                <div class="ai-agent__welcome" id="agentWelcome">
+                    <h2 class="ai-agent__welcome-title">Comment puis-je vous aider aujourd'hui ?</h2>
+                    <p class="ai-agent__welcome-sub">Je suis Lynda, l'assistante IA de Maurel Brou. Posez vos questions sur ses projets, ses compétences, ou démarrez une demande de projet.</p>
+                    <div class="ai-agent__welcome-chips">
+                        <button class="ai-agent__chip" data-q="Présente-toi">Présente-toi</button>
+                        <button class="ai-agent__chip" data-q="Quels sont tes projets ?">Ses projets</button>
+                        <button class="ai-agent__chip" data-q="Quels services proposes-tu ?">Ses services</button>
+                        <button class="ai-agent__chip" data-q="Quelles sont tes compétences ?">Ses compétences</button>
+                        <button class="ai-agent__chip" data-q="Je veux voir le CV">Son CV</button>
+                        <button class="ai-agent__chip" data-q="Comment te contacter ?">Le contacter</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ai-agent__composer">
+                <div class="ai-agent__attach-preview" id="agentAttachPreview" hidden></div>
+                <form class="ai-agent__form" id="agentForm" autocomplete="off">
+                    <div class="ai-agent__plus-wrap">
+                        <button type="button" class="ai-agent__plus" id="agentPlus" aria-label="Options" aria-expanded="false" title="Options">
+                            <i class="bi bi-plus-lg"></i>
+                        </button>
+                        <div class="ai-agent__menu" id="agentMenu" role="menu" hidden>
+                            <button type="button" class="ai-agent__menu-item" id="menuNewChat" role="menuitem">
+                                <i class="bi bi-chat-left-text"></i> Nouvelle discussion
+                            </button>
+                            <button type="button" class="ai-agent__menu-item" id="menuAttach" role="menuitem">
+                                <i class="bi bi-paperclip"></i> Joindre un fichier
+                            </button>
+                            <button type="button" class="ai-agent__menu-item" id="menuHistory" role="menuitem">
+                                <i class="bi bi-clock-history"></i> Historique
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="agentInput" class="ai-agent__input" placeholder="Posez une question sur Maurel Brou…" aria-label="Votre message" rows="1"></textarea>
+                    <button type="button" class="ai-agent__mic" id="agentMic" aria-label="Dicter" title="Dicter (voix)">
+                        <i class="bi bi-mic"></i>
+                    </button>
+                    <button type="submit" class="ai-agent__send" aria-label="Envoyer" disabled>
+                        <i class="bi bi-send"></i>
+                    </button>
+                </form>
+                <input type="file" id="agentFile" hidden multiple
+                    accept=".pdf,.doc,.docx,.txt,.md,.csv,.json,.png,.jpg,.jpeg,.webp">
+                <div class="ai-agent__voice" id="agentVoice" hidden>
+                    <span class="ai-agent__voice-dot"></span>
+                    <span class="ai-agent__voice-text" id="agentVoiceText">Lynda vous écoute…</span>
+                    <button type="button" class="ai-agent__voice-stop" id="agentVoiceStop">Arrêter</button>
+                </div>
+                <p class="ai-agent__disclaimer">Lynda peut faire des erreurs. Vérifiez les informations importantes.</p>
+            </div>
+
+            <!-- Panneau d'historique des conversations -->
+            <div class="ai-agent__history" id="agentHistory" hidden>
+                <div class="ai-agent__history-head">
+                    <span>Conversations</span>
+                    <button type="button" class="ai-agent__history-close" id="agentHistoryClose" aria-label="Fermer">&times;</button>
+                </div>
+                <div class="ai-agent__history-search">
+                    <i class="bi bi-search"></i>
+                    <input type="text" id="agentHistorySearch" placeholder="Rechercher une conversation…" aria-label="Rechercher">
+                </div>
+                <ul class="ai-agent__history-list" id="agentHistoryList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bulle WhatsApp flottante (bas droite) -->
+    <a class="whatsapp-float" id="whatsappFloat" href="https://wa.me/2250702607646" target="_blank" rel="noopener" aria-label="Contacter par WhatsApp" title="WhatsApp">
+        <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M16.01 3.2c-7.09 0-12.85 5.76-12.85 12.85 0 2.27.6 4.48 1.73 6.43L3.2 28.8l6.46-1.69a12.8 12.8 0 0 0 6.35 1.62h.01c7.09 0 12.85-5.76 12.85-12.85 0-7.09-5.76-12.85-12.86-12.85zm0 23.3h-.01a10.7 10.7 0 0 1-5.45-1.49l-.39-.23-3.83 1 .99-3.74-.25-.4a10.7 10.7 0 0 1-1.64-5.69c0-5.94 4.84-10.78 10.78-10.78 2.88 0 5.59 1.12 7.63 3.16a10.74 10.74 0 0 1 3.16 7.62c0 5.94-4.84 10.78-10.79 10.78zm5.9-8.06c-.32-.16-1.91-.94-2.21-1.05-.3-.11-.52-.16-.74.16-.22.32-.84 1.05-1.03 1.26-.19.22-.38.24-.7.08-.32-.16-1.36-.5-2.59-1.6-.96-.86-1.6-1.91-1.79-2.23-.19-.32-.02-.49.14-.65.14-.14.32-.38.48-.56.16-.19.22-.32.32-.54.11-.22.05-.4-.03-.56-.08-.16-.74-1.78-1.01-2.44-.27-.64-.54-.56-.74-.57h-.63c-.22 0-.56.08-.86.4-.3.32-1.13 1.1-1.13 2.69 0 1.59 1.16 3.13 1.32 3.35.16.22 2.27 3.47 5.5 4.86.77.33 1.37.53 1.84.68.77.25 1.48.21 2.03.13.62-.09 1.91-.78 2.18-1.53.27-.75.27-1.39.19-1.53-.08-.14-.3-.22-.62-.38z"/>
+        </svg>
+    </a>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- Mode développeur : Markdown, sécurisation, coloration, LaTeX, Mermaid -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.9/dist/purify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"></script>
+    <!-- OCR (Tesseract.js) : lecture de texte dans les images, sans clé -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.0/dist/tesseract.min.js"></script>
+    <!-- Analyse de documents (côté client, sans clé) -->
+    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mammoth@1.7.2/mammoth.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/agent-data.js"></script>
+    <script src="assets/js/agent-rag.js"></script>
+    <script src="assets/js/agent-site.js"></script>
+    <script src="assets/js/agent.js?v=20260716-2"></script>
+</body>
+</html>

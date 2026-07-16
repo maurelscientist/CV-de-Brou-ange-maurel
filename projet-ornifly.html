@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ornifly | Projet</title>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- Custom CSS (palette principale) -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <style>
+    body { background: var(--bg); color: var(--text); }
+
+    .project-detail-page { padding: 140px 0 90px; }
+
+    /* Hero visuel basé sur la video du projet */
+    .detail-hero {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--line-strong);
+      background: var(--bg-elev);
+      margin-bottom: 56px;
+      min-height: 460px;
+      display: flex;
+      align-items: flex-end;
+    }
+    .detail-hero video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.12);
+      filter: blur(6px) grayscale(20%) contrast(1.02);
+      transition: transform .6s var(--transition), filter .6s var(--transition);
+    }
+    .detail-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(34,37,41,0) 35%, rgba(34,37,41,0.82) 100%);
+      z-index: 1;
+    }
+    .detail-hero:hover video { transform: scale(1.16); filter: blur(5px) grayscale(0%) contrast(1.04); }
+    .detail-hero__inner {
+      position: relative;
+      z-index: 2;
+      padding: 40px;
+      width: 100%;
+      color: var(--white);
+    }
+    .detail-hero__inner .project-tag {
+      color: var(--white);
+      border-color: rgba(248,248,248,0.5);
+      background: rgba(248,248,248,0.08);
+    }
+    .detail-hero__inner .project-title { color: var(--white); }
+    .detail-hero__inner .project-desc { color: rgba(248,248,248,0.85); max-width: 640px; }
+
+    /* Cartes de contenu réutilisant la palette */
+    .detail-card {
+      background: var(--bg-elev);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      height: 100%;
+      transition: transform .4s var(--transition), border-color .4s var(--transition), box-shadow .4s var(--transition);
+    }
+    .detail-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--line-strong);
+      box-shadow: var(--shadow-soft);
+    }
+    .detail-card .section-title {
+      font-size: 1.4rem;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .detail-card .section-title i {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      flex-shrink: 0;
+      border-radius: 12px;
+      background: var(--accent);
+      color: var(--white);
+      font-size: 1.15rem;
+    }
+    .detail-card ul { padding-left: 0; list-style: none; margin: 0; }
+    .detail-card li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      color: var(--text-soft);
+      font-size: 0.98rem;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .detail-card li:last-child { border-bottom: 0; }
+    .detail-card li i { color: var(--accent); margin-top: 4px; }
+
+    .detail-cta {
+      text-align: center;
+      padding: 56px 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--bg-soft);
+    }
+
+    /* Bouton retour en haut */
+    .back-to-top {
+      position: fixed;
+      right: 28px;
+      bottom: 28px;
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--white);
+      border: 1px solid var(--line-strong);
+      box-shadow: var(--shadow-soft);
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(12px);
+      transition: all .35s var(--transition);
+      z-index: 900;
+    }
+    .back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+    .back-to-top:hover { background: var(--text); transform: translateY(-3px); }
+  </style>
+</head>
+<body class="project-detail-page">
+
+  <!-- ========== HEADER / NAVBAR (identique a la page principale) ========== -->
+  <header id="mainNav" class="navbar navbar-expand-lg fixed-top custom-navbar">
+    <div class="container">
+      <a class="navbar-brand logo" href="index.html#home">
+        <span class="logo-bracket">&lt;</span><span class="logo-name">Ange-Maurel</span><span class="logo-bracket">/&gt;</span>
+      </a>
+      <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarMain">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html#home">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#projects">Projets</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#parcours">Parcours</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#services">Services</a></li>
+          <li class="nav-item">
+            <button class="theme-toggle" id="themeToggle" type="button" aria-label="Basculer le theme">
+              <i class="bi bi-moon-stars icon-moon"></i>
+              <i class="bi bi-sun icon-sun"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- Hero visuel -->
+    <div class="detail-hero" data-aos="fade-up">
+      <video src="ORNIFLY/Vidéo ornifly.mp4" autoplay muted loop playsinline></video>
+      <div class="detail-hero__inner">
+        <span class="project-tag">Web App · Booking</span>
+        <h1 class="project-title">Ornifly</h1>
+        <p class="project-desc">Ornifly est une plateforme web de reservation de billets d'avion. Elle permet aux utilisateurs de rechercher des vols, consulter les disponibilites et effectuer des reservations en ligne de maniere simple, rapide et securisee.</p>
+      </div>
+    </div>
+
+    <!-- Cartes de contenu -->
+    <div class="row g-4">
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="detail-card">
+          <h2 class="section-title"><i class="bi bi-bullseye"></i> Objectifs du projet</h2>
+          <ul>
+            <li><i class="bi bi-check2"></i> Simplifier la reservation de billets sans intermediaires complexes.</li>
+            <li><i class="bi bi-check2"></i> Proposer une experience fluide et accessible sur le web.</li>
+            <li><i class="bi bi-check2"></i> Rendre la recherche et la comparaison des vols plus rapide.</li>
+            <li><i class="bi bi-check2"></i> Offrir un parcours utilisateur clair et intuitif.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="detail-card">
+          <h2 class="section-title"><i class="bi bi-stars"></i> Fonctionnalites principales</h2>
+          <ul>
+            <li><i class="bi bi-check2"></i> Recherche de vols multi-criteres.</li>
+            <li><i class="bi bi-check2"></i> Reservation en ligne securisee.</li>
+            <li><i class="bi bi-check2"></i> Gestion et suivi des billets.</li>
+            <li><i class="bi bi-check2"></i> Interface claire pour un parcours fluide.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulaire "Avez-vous un projet ?" -->
+    <section class="project-cta-form" data-aos="fade-up">
+      <p class="project-cta-form__eyebrow">Travaillons ensemble</p>
+      <h2 class="project-cta-form__title">Avez-vous un projet ?</h2>
+      <p class="project-cta-form__subtitle">Que vous ayez besoin d'une application web, mobile ou d'une solution de Business Intelligence, parlons de votre idée. Décrivez votre projet et je vous recontacte rapidement.</p>
+      <form class="project-cta-form__form" action="mailto:maurelbrou040@gmail.com" method="post" enctype="text/plain">
+        <div class="project-cta-form__field">
+          <label for="pcf-nom-ornifly">Votre nom</label>
+          <input type="text" id="pcf-nom-ornifly" name="Nom" placeholder="Jean Dupont" required>
+        </div>
+        <div class="project-cta-form__field">
+          <label for="pcf-email-ornifly">Votre email</label>
+          <input type="email" id="pcf-email-ornifly" name="Email" placeholder="jean@entreprise.com" required>
+        </div>
+        <div class="project-cta-form__field">
+          <label for="pcf-type-ornifly">Type de projet</label>
+          <select id="pcf-type-ornifly" name="Type de projet">
+            <option value="Application web">Application web</option>
+            <option value="Application mobile">Application mobile</option>
+            <option value="Business Intelligence">Business Intelligence</option>
+            <option value="API / Back-end">API / Back-end</option>
+            <option value="Autre">Autre</option>
+          </select>
+        </div>
+        <div class="project-cta-form__field">
+          <label for="pcf-budget-ornifly">Budget estimé</label>
+          <select id="pcf-budget-ornifly" name="Budget">
+            <option value="Moins de 500 000 FCFA">Moins de 500 000 FCFA</option>
+            <option value="500 000 - 1 500 000 FCFA">500 000 - 1 500 000 FCFA</option>
+            <option value="1 500 000 - 5 000 000 FCFA">1 500 000 - 5 000 000 FCFA</option>
+            <option value="Plus de 5 000 000 FCFA">Plus de 5 000 000 FCFA</option>
+            <option value="À discuter">À discuter</option>
+          </select>
+        </div>
+        <div class="project-cta-form__field project-cta-form__field--full">
+          <label for="pcf-message-ornifly">Décrivez votre projet</label>
+          <textarea id="pcf-message-ornifly" name="Message" placeholder="Expliquez votre besoin, vos objectifs et vos échéances..." required></textarea>
+        </div>
+        <button type="submit" class="project-cta-form__submit">
+          <span>Envoyer ma demande</span>
+          <i class="bi bi-send"></i>
+        </button>
+      </form>
+      <div class="project-cta-form__success" id="pcf-success-ornifly">
+        <i class="bi bi-check-circle"></i> Merci ! Votre messagerie va s'ouvrir pour envoyer votre demande.
+      </div>
+    </section>
+
+    <!-- CTA retour -->
+    <div class="detail-cta mt-5" data-aos="fade-up">
+      <h2 class="section-title justify-content-center">Envie de decouvrir mes autres realisations ?</h2>
+      <p class="project-desc mx-auto" style="max-width:560px;">Retourne au portfolio pour explorer l'ensemble de mes projets web, mobile et BI.</p>
+      <a href="index.html#projects" class="btn btn-primary-custom">
+        <span>Voir tous les projets</span>
+        <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Bouton retour en haut -->
+  <button class="back-to-top" id="backToTop" type="button" aria-label="Retour en haut">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    if (typeof AOS !== 'undefined') {
+      AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 60 });
+    }
+    const btt = document.getElementById('backToTop');
+    if (btt) {
+      window.addEventListener('scroll', () => {
+        btt.classList.toggle('show', window.scrollY > 400);
+      }, { passive: true });
+      btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    }
+
+    const pcfFormOrnifly = document.querySelector('.project-cta-form__form');
+    if (pcfFormOrnifly) {
+      pcfFormOrnifly.addEventListener('submit', () => {
+        const ok = document.getElementById('pcf-success-ornifly');
+        if (ok) ok.classList.add('show');
+      });
+    }
+  </script>
+</body>
+</html>
