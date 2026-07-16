@@ -1053,11 +1053,49 @@
         if (quick) quick.style.display = 'none';
         wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
-        document.getElementById('agentFormSubmit').addEventListener('click', () => {
+        document.getElementById('agentFormSubmit').addEventListener('click', async () => {
             const f = wrap;
             const get = (n) => (f.querySelector(`[name="${n}"]`) || {}).value || '';
             if (!get('nom') || !get('prenom') || !get('email') || !get('type') || !get('desc') || !f.querySelector('[name="rgpd"]').checked) {
                 addMessage("Merci de compléter les champs obligatoires (*) et d'accepter la politique RGPD.", 'bot');
+                return;
+            }
+            const btn = document.getElementById('agentFormSubmit');
+            btn.disabled = true;
+            btn.textContent = '⏳ Envoi en cours…';
+            // Envoi vers Formspree (ID du formulaire de projet)
+            const FORMSPREE_ID = 'dcb38efc-44fa-466b-902a-11690ceba320';
+            const payload = {
+                nom: get('nom'),
+                prenom: get('prenom'),
+                entreprise: get('entreprise'),
+                fonction: get('fonction'),
+                email: get('email'),
+                tel: get('tel'),
+                pays: get('pays'),
+                ville: get('ville'),
+                type: get('type'),
+                budget: get('budget'),
+                date: get('date'),
+                desc: get('desc'),
+                features: get('features'),
+                tech: get('tech'),
+                figma: get('figma'),
+                existing: get('existing'),
+                source: get('source'),
+                _subject: `Nouvelle demande de projet — ${get('prenom')} ${get('nom')}`
+            };
+            try {
+                const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+            } catch (e) {
+                btn.disabled = false;
+                btn.textContent = 'Envoyer ma demande';
+                addMessage("⚠️ Une erreur est survenue lors de l'envoi. Vérifiez votre connexion et réessayez, ou contactez Maurel directement à " + K.contact.email + '.', 'bot');
                 return;
             }
             const recap = `Merci ${get('prenom')} ! Votre demande a été envoyée avec succès. Maurel Brou vous recontactera rapidement à ${get('email')}.\n\nRécapitulatif :\n• Projet : ${get('type')}\n• Description : ${get('desc')}\n• Budget : ${get('budget') || 'non précisé'}\n• Échéance : ${get('date') || 'flexible'}`;
