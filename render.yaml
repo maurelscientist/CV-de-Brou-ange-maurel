@@ -1,0 +1,35 @@
+# Fichier de déploiement Render (gratuit)
+# ========================================
+# Ce fichier permet de déployer AUTOMATIQUEMENT le backend Lynda
+# (Node.js) sur Render en connectant ce dépôt GitHub.
+#
+# Étapes :
+# 1. Créez un compte sur https://render.com (gratuit)
+# 2. "New" -> "Blueprint" -> connectez le dépôt GitHub
+#    maurelscientist/CV-de-Brou-ange-maurel
+# 3. Render lit ce fichier et crée le service "lynda-backend"
+# 4. Dans les variables d'environnement du service, ajoutez :
+#      GROQ_KEY        = votre clé Groq (gsk_...)
+#      OPENROUTER_KEY  = votre clé OpenRouter (sk-or-v1-...)
+#      (optionnel) GROQ_KEY_2 = clé de secours
+# 5. Une fois déployé, récupérez l'URL (ex. https://lynda-backend.onrender.com)
+#    et renseignez-la dans index.html :
+#      <script>window.LYNDA_API_BASE = "https://lynda-backend.onrender.com";</script>
+
+services:
+  - type: web
+    name: lynda-backend
+    runtime: node
+    rootDir: backend
+    plan: free
+    buildCommand: "echo 'no build step'"
+    startCommand: "node server.js"
+    envVars:
+      - key: PORT
+        value: "5000"
+      - key: GROQ_KEY
+        sync: false
+      - key: OPENROUTER_KEY
+        sync: false
+      - key: GROQ_KEY_2
+        sync: false

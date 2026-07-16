@@ -944,6 +944,16 @@
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
     <script src="assets/js/main.js"></script>
+    <!-- ============================================================
+         CONFIGURATION DU BACKEND LYNDA (IA)
+         En local, laissez cette ligne vide ou supprimez-la :
+           <script>window.LYNDA_API_BASE = "";</script>
+         En production (backend hébergé, ex. Render) :
+           <script>window.LYNDA_API_BASE = "https://VOTRE-BACKEND.onrender.com";</script>
+         Si la variable est absente, le code retombe sur http://127.0.0.1:5000
+         (utile en local). Pour GitHub Pages, renseignez l'URL de votre backend.
+         ============================================================ -->
+    <script>window.LYNDA_API_BASE = "";</script>
     <script src="assets/js/agent-data.js"></script>
     <script src="assets/js/agent-rag.js"></script>
     <script src="assets/js/agent-site.js"></script>

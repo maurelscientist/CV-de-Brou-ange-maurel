@@ -1,0 +1,13 @@
+{
+  "name": "lynda-backend",
+  "version": "1.0.0",
+  "description": "Backend Node.js de Lynda (assistante IA du portfolio de Brou Amoikon Richard Ange-Maurel)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "private": true
+}

@@ -55,7 +55,9 @@ loadEnv();
 
 /* ---------- Configuration ---------- */
 const PORT = parseInt(process.env.PORT || '5000', 10);
-const HOST = '127.0.0.1';
+// En production (hébergé), on écoute sur 0.0.0.0 pour être joignable
+// depuis l'extérieur. En local, 127.0.0.1 suffit.
+const HOST = process.env.HOST || (process.env.NODE_ENV === 'production' ? '0.0.0.0' : '127.0.0.1');
 const GROQ_KEY = process.env.GROQ_KEY || '';
 const GROQ_KEY_2 = process.env.GROQ_KEY_2 || '';
 // Liste des clés Groq disponibles, alternées en cas de quota épuisé (429).
