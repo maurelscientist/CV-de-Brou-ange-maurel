@@ -1889,7 +1889,6 @@ Utilise ces composants quand ils améliorent la clarté. Reste naturelle et n'en
                 .replace(/\s+/g, ' ')
                 .trim()
                 .slice(0, 60) || userText;
-            const webPromise = searchWeb(userText);
             // Recherche d'images UNIQUEMENT si elles apportent une réelle
             // valeur (personne, lieu, monument, marque, œuvre…). Sinon on
             // n'affiche que du texte — pas d'images systématiques.
@@ -1899,7 +1898,17 @@ Utilise ces composants quand ils améliorent la clarté. Reste naturelle et n'en
             const imgPromise = shouldFetchImages(userText)
                 ? searchImages(imgQuery, 3, imgType).catch(() => [])
                 : Promise.resolve([]);
-            const [results, images] = await Promise.all([webPromise, imgPromise]);
+            // La recherche web est PUREMENT optionnelle : elle ne doit JAMAIS
+            // faire échouer la réponse du LLM. On la lance dans son propre
+            // try et on capture toute erreur (timeout, réseau, 5xx) pour
+            // retomber sur une réponse sans contexte web.
+            let results = null;
+            try {
+                results = await searchWeb(userText);
+            } catch (e) {
+                results = null;
+            }
+            const images = await imgPromise;
 
             if (results && results.length) {
                 const ctx = results.map(r =>
