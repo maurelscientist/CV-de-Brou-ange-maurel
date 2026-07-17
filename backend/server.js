@@ -76,6 +76,10 @@ const POLLINATIONS_URL = 'https://image.pollinations.ai/prompt/';
 const OPENROUTER_KEY = process.env.OPENROUTER_KEY || '';
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
 const OPENROUTER_MODEL = 'tencent/hy3:free';
+// Si la clé OpenRouter est détectée invalide (401), on la désactive
+// définitivement pour cette session afin d'éviter de faire planter le
+// flux chat (le 401 déclenchait une exception fatale → 502 Render).
+let OPENROUTER_DISABLED = false;
 
 /* ---------- Getty Images (recherche d'images) ----------
    API Getty Images Connect (https://api.gettyimages.com). Nécessite une
@@ -242,7 +246,14 @@ async function groqChat(messages, traceKind) {
           const data = await resp.json();
           const reply = data.choices?.[0]?.message?.content?.trim();
           if (reply) { finalResult = { reply, model }; break; }
-          lastErr = 'réponse vide';
+          // Réponse Groq 200 mais contenu vide : on garde la réponse brute
+          // (ex. contenu dans un autre champ) plutôt que de basculer sur
+          // OpenRouter (qui peut avoir une clé invalide et faire planter).
+          if (data && data.choices && data.choices[0] && data.choices[0].message) {
+            const raw = String(data.choices[0].message.content || '').trim();
+            if (raw) { finalResult = { reply: raw, model }; break; }
+          }
+          lastErr = 'réponse vide Groq';
           break;
         } catch (e) {
           lastErr = String(e && e.message || e);
@@ -274,9 +285,10 @@ async function groqChat(messages, traceKind) {
   // REPLI OpenRouter (modèle gratuit tencent/hy3:free) si Groq est en
   // quota (429) ou indisponible. OpenRouter a son propre quota, indépendant
   // de l'organisation Groq, donc ça débloque quand Groq est saturé.
-  // On ne bascule sur OpenRouter QUE si la clé est présente et valide
-  // (pas de 401). Sinon on reste sur Groq (retry ci-dessous).
-  if (OPENROUTER_KEY) {
+  // On ne bascule sur OpenRouter QUE si la clé est présente, valide et
+  // non désactivée. Si la clé est invalide (401), on la désactive pour
+  // éviter de faire planter le flux chat (exception fatale → 502 Render).
+  if (OPENROUTER_KEY && !OPENROUTER_DISABLED) {
     try {
       const orResp = await fetch(OPENROUTER_URL, {
         method: 'POST',
@@ -306,10 +318,11 @@ async function groqChat(messages, traceKind) {
         }
       } else {
         const orBody = (await orResp.text()).slice(0, 300);
-        // Si la clé OpenRouter est invalide (401), on ne bascule PAS dessus
-        // et on garde Groq comme priorité (retry plus bas).
+        // Si la clé OpenRouter est invalide (401), on la désactive
+        // définitivement pour cette session (évite les 502 répétés).
         if (orResp.status === 401) {
-          lastErr = `OpenRouter clé invalide (401) — on reste sur Groq`;
+          OPENROUTER_DISABLED = true;
+          lastErr = `OpenRouter clé invalide (401) — repli désactivé, on reste sur Groq`;
         } else {
           lastErr = `OpenRouter ${orResp.status}: ${orBody}`;
         }
@@ -324,6 +337,9 @@ async function groqChat(messages, traceKind) {
   // fois. Le quota Groq peut s'être libéré entre-temps, et c'est notre
   // fournisseur principal fiable. On évite ainsi le message « cerveau IA
   // indisponible » alors que Groq aurait pu répondre.
+  // IMPORTANT : on capture TOUTE erreur ici pour ne JAMAIS planter le
+  // process (ce qui donnerait un 502 côté Render). Si Groq répond, on
+  // l'utilise ; sinon on renvoie une erreur gracieuse au frontend.
   try {
     const retry = await groqRequestWithKey(
       {
@@ -346,9 +362,11 @@ async function groqChat(messages, traceKind) {
       }
     }
   } catch (e) {
-    // on garde lastErr précédent
+    // on garde lastErr précédent (erreur Groq ou OpenRouter)
   }
 
+  // Si on arrive ici, Groq ET OpenRouter ont échoué. On renvoie une erreur
+  // gracieuse (pas d'exception non gérée qui tuerait le process / 502).
   throw new Error(lastErr || 'LLM indisponible');
 }
 
