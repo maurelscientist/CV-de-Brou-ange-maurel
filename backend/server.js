@@ -274,9 +274,8 @@ async function groqChat(messages, traceKind) {
   // REPLI OpenRouter (modèle gratuit tencent/hy3:free) si Groq est en
   // quota (429) ou indisponible. OpenRouter a son propre quota, indépendant
   // de l'organisation Groq, donc ça débloque quand Groq est saturé.
-  // Note : la clé OpenRouter fournie a 0 crédit ; les modèles :free sont
-  // utilisables mais souvent instables/surchargés. Ce repli est un filet de
-  // sécurité, pas une solution pérenne si Groq reste en quota.
+  // On ne bascule sur OpenRouter QUE si la clé est présente et valide
+  // (pas de 401). Sinon on reste sur Groq (retry ci-dessous).
   if (OPENROUTER_KEY) {
     try {
       const orResp = await fetch(OPENROUTER_URL, {
@@ -306,7 +305,14 @@ async function groqChat(messages, traceKind) {
           return { reply: orReply, model: OPENROUTER_MODEL };
         }
       } else {
-        lastErr = `OpenRouter ${orResp.status}: ${(await orResp.text()).slice(0, 300)}`;
+        const orBody = (await orResp.text()).slice(0, 300);
+        // Si la clé OpenRouter est invalide (401), on ne bascule PAS dessus
+        // et on garde Groq comme priorité (retry plus bas).
+        if (orResp.status === 401) {
+          lastErr = `OpenRouter clé invalide (401) — on reste sur Groq`;
+        } else {
+          lastErr = `OpenRouter ${orResp.status}: ${orBody}`;
+        }
       }
     } catch (e) {
       lastErr = `OpenRouter err: ${String(e && e.message || e)}`;
