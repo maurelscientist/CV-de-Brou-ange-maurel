@@ -313,6 +313,36 @@ async function groqChat(messages, traceKind) {
     }
   }
 
+  // REPLI FINAL : si Groq était en 429 (quota) et qu'OpenRouter a aussi
+  // échoué (clé invalide, 401, surcharge…), on retente Groq une dernière
+  // fois. Le quota Groq peut s'être libéré entre-temps, et c'est notre
+  // fournisseur principal fiable. On évite ainsi le message « cerveau IA
+  // indisponible » alors que Groq aurait pu répondre.
+  try {
+    const retry = await groqRequestWithKey(
+      {
+        model: GROQ_MODEL,
+        temperature: 0.8,
+        max_tokens: 1024,
+        messages: finalMessages,
+      },
+      30000
+    );
+    if (retry && retry.resp && retry.resp.ok) {
+      const rd = await retry.resp.json();
+      const rr = rd.choices?.[0]?.message?.content?.trim();
+      if (rr) {
+        traceLLM((traceKind || 'chat') + ':groq-retry', messages, { reply: rr, model: GROQ_MODEL }, {
+          durationMs: Date.now() - t0,
+          error: null
+        });
+        return { reply: rr, model: GROQ_MODEL };
+      }
+    }
+  } catch (e) {
+    // on garde lastErr précédent
+  }
+
   throw new Error(lastErr || 'LLM indisponible');
 }
 
@@ -673,6 +703,40 @@ const server = http.createServer(async (req, res) => {
     /* ---- Health ---- */
     if (req.method === 'GET' && pathname === '/api/health') {
       return sendJson(res, 200, { status: 'ok', groq_configured: Boolean(GROQ_KEY) });
+    }
+
+    /* ---- Diagnostic (teste Groq et OpenRouter séparément) ---- */
+    if (req.method === 'GET' && pathname === '/api/diag') {
+      const diag = { groq: null, openrouter: null, groqKeys: GROQ_KEYS.length, openrouterSet: Boolean(OPENROUTER_KEY) };
+      // Test Groq
+      try {
+        const gResp = await fetch(GROQ_URL, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${GROQ_KEY}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ model: GROQ_MODEL, messages: [{ role: 'user', content: 'ping' }] }),
+          signal: AbortSignal.timeout(15000),
+        });
+        diag.groq = { status: gResp.status, ok: gResp.ok };
+        if (!gResp.ok) diag.groq.body = (await gResp.text()).slice(0, 300);
+      } catch (e) {
+        diag.groq = { error: String(e && e.message || e) };
+      }
+      // Test OpenRouter (seulement si clé présente)
+      if (OPENROUTER_KEY) {
+        try {
+          const oResp = await fetch(OPENROUTER_URL, {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${OPENROUTER_KEY}`, 'Content-Type': 'application/json', 'HTTP-Referer': 'http://127.0.0.1:5000', 'X-Title': 'Lynda Portfolio' },
+            body: JSON.stringify({ model: OPENROUTER_MODEL, messages: [{ role: 'user', content: 'ping' }] }),
+            signal: AbortSignal.timeout(15000),
+          });
+          diag.openrouter = { status: oResp.status, ok: oResp.ok };
+          if (!oResp.ok) diag.openrouter.body = (await oResp.text()).slice(0, 300);
+        } catch (e) {
+          diag.openrouter = { error: String(e && e.message || e) };
+        }
+      }
+      return sendJson(res, 200, diag);
     }
 
     /* ---- Chat ---- */
