@@ -946,6 +946,9 @@ img, video { max-width: 100%; height: auto; display: block; background: var(--bg
     .hero-meta {
         justify-content: center;
     }
+    .hero-photo-wrap {
+        margin-top: 40px;
+    }
 }
 
 /* =========================================================
