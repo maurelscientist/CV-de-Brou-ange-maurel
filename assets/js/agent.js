@@ -781,10 +781,33 @@
 
     // Affichage instantané (plus d'effet machine à écrire) : le texte
     // apparaît en une fois, sans animation caractère par caractère.
+    // Effet de frappe progressive (typewriter) : le texte apparaît
+    // caractère par caractère pour éviter un long temps d'attente muet.
     const renderInstant = (el, text, done) => {
-        el.innerHTML = formatText(text);
-        messages.scrollTop = messages.scrollHeight;
-        if (done) done();
+        const html = formatText(text);
+        // On parse le HTML en texte brut pour défiler proprement, puis on
+        // réinjecte le HTML final à la fin (les réponses de Lynda sont du
+        // texte simple, éventuellement avec des sauts de ligne).
+        const tmp = document.createElement('div');
+        tmp.innerHTML = html;
+        const plain = tmp.textContent || '';
+        el.textContent = '';
+        let i = 0;
+        const step = Math.max(1, Math.round(plain.length / 220)); // ~vitesse adaptative
+        const tick = () => {
+            if (state.aborted) { el.innerHTML = html; if (done) done(); return; }
+            i += step;
+            if (i >= plain.length) {
+                el.innerHTML = html;
+                messages.scrollTop = messages.scrollHeight;
+                if (done) done();
+                return;
+            }
+            el.textContent = plain.slice(0, i);
+            messages.scrollTop = messages.scrollHeight;
+            requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
     };
 
     const typeWriter = renderInstant;
