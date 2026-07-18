@@ -958,21 +958,23 @@ img, video { max-width: 100%; height: auto; display: block; background: var(--bg
         flex-wrap: wrap;
     }
     .project-actions .btn {
-        flex: 0 0 calc(50% - 8px);
-        width: calc(50% - 8px);
+        flex: 1 1 0;
+        min-width: 0;
+        width: 50%;
         justify-content: center;
-        padding: 11px 8px;
-        font-size: 0.8rem;
+        padding: 11px 14px;
+        font-size: 0.82rem;
         white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
     }
     .project-actions .btn span {
-        width: 100%;
+        flex: 1 1 auto;
         text-align: center;
     }
     .project-actions .btn svg {
-        display: none;
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        flex: 0 0 auto;
     }
 }
 
