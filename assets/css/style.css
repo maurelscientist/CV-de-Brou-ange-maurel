@@ -958,10 +958,21 @@ img, video { max-width: 100%; height: auto; display: block; background: var(--bg
         flex-wrap: wrap;
     }
     .project-actions .btn {
-        flex: 1 1 0;
+        flex: 0 0 calc(50% - 8px);
+        width: calc(50% - 8px);
         justify-content: center;
-        padding: 11px 16px;
-        font-size: 0.82rem;
+        padding: 11px 8px;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .project-actions .btn span {
+        width: 100%;
+        text-align: center;
+    }
+    .project-actions .btn svg {
+        display: none;
     }
 }
 
