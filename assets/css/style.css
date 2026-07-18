@@ -949,6 +949,18 @@ img, video { max-width: 100%; height: auto; display: block; background: var(--bg
     .hero-photo-wrap {
         margin-top: 40px;
     }
+    .project-info {
+        text-align: center;
+    }
+    .project-actions {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .project-actions .btn {
+        flex: 1 1 0;
+        justify-content: center;
+    }
 }
 
 /* =========================================================
