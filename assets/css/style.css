@@ -960,6 +960,8 @@ img, video { max-width: 100%; height: auto; display: block; background: var(--bg
     .project-actions .btn {
         flex: 1 1 0;
         justify-content: center;
+        padding: 11px 16px;
+        font-size: 0.82rem;
     }
 }
 
