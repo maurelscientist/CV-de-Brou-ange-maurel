@@ -909,6 +909,46 @@ img, video { max-width: 100%; height: auto; display: block; background: var(--bg
 }
 
 /* =========================================================
+   HERO — RESPONSIVE (mobile / téléphone)
+   Centre le nom et les écritures sur petit écran
+   ========================================================= */
+@media (max-width: 768px) {
+    .hero-section {
+        text-align: center;
+        padding: 120px 0 80px;
+    }
+    .hero-content {
+        max-width: 100%;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .hero-greeting {
+        justify-content: center;
+    }
+    .hero-title {
+        text-align: center;
+    }
+    .hero-firstname,
+    .hero-lastname {
+        text-align: center;
+    }
+    .hero-subtitle {
+        text-align: center;
+    }
+    .hero-tagline {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .hero-cta {
+        justify-content: center;
+    }
+    .hero-meta {
+        justify-content: center;
+    }
+}
+
+/* =========================================================
    BUTTONS
    ========================================================= */
 .btn-primary-custom,
