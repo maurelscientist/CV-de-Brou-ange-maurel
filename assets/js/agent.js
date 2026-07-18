@@ -93,11 +93,17 @@
        indéfiniment en arrière-plan. */
     const fetchWithTimeout = (url, options = {}, timeoutMs = 15000) => {
         const external = options.signal || null;
-        const signals = [AbortSignal.timeout(timeoutMs)];
+        // AbortController explicite + setTimeout : garantit l'annulation
+        // même si la connexion TCP est encore en cours d'établissement
+        // (cas d'un backend en cold start qui ne répond pas avant longtemps).
+        // AbortSignal.timeout() seul ne se déclenche pas toujours dans ce cas.
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), timeoutMs);
+        const signals = [controller.signal];
         if (external) signals.push(external);
         const combined = signals.length > 1 ? AbortSignal.any(signals) : signals[0];
         const { signal, ...rest } = options;
-        return fetch(url, { ...rest, signal: combined });
+        return fetch(url, { ...rest, signal: combined }).finally(() => clearTimeout(timer));
     };
 
     /* ---------- Références DOM ---------- */
@@ -1899,17 +1905,23 @@ Utilise ces composants quand ils améliorent la clarté. Reste naturelle et n'en
                 ? searchImages(imgQuery, 3, imgType).catch(() => [])
                 : Promise.resolve([]);
             // La recherche web est PUREMENT optionnelle : elle ne doit JAMAIS
-            // faire échouer la réponse du LLM. On la lance dans son propre
-            // try et on capture toute erreur (timeout, réseau, 5xx) pour
-            // retomber sur une réponse sans contexte web.
-            let results = null;
-            try {
-                results = await searchWeb(userText);
-            } catch (e) {
-                results = null;
-            }
+            // faire échouer la réponse du LLM. On la lance en PARALLÈLE de
+            // queryLLM (jamais en attente bloquante) et on ne l'utilise que
+            // si elle revient avec des résultats AVANT la fin de queryLLM.
+            // Cela évite qu'un /api/search lent (cold start Render, ~11s)
+            // ne bloque tout le flux et n'empêche /api/chat d'être appelé.
+            const searchPromise = searchWeb(userText).catch(() => null);
             const images = await imgPromise;
 
+            // queryLLM en priorité absolue : on ne l'attend pas après searchWeb.
+            const reply = await queryLLM([
+                ...baseMessages,
+                { role: 'user', content: userText }
+            ]);
+
+            // Si la recherche web a produit des résultats, on refait un
+            // appel avec le contexte (sinon on garde la réponse déjà obtenue).
+            const results = await searchPromise;
             if (results && results.length) {
                 const ctx = results.map(r =>
                     `• ${r.title}\n  ${r.body}\n  (${r.href})`
@@ -1919,14 +1931,10 @@ Utilise ces composants quand ils améliorent la clarté. Reste naturelle et n'en
                     { role: 'user', content: userText },
                     { role: 'system', content: `Résultats de recherche web pertinents et à jour :\n${ctx}\n\nUtilise ces sources pour répondre de façon précise et actuelle. Si la question concerne un fait qui a pu évoluer (score, résultat, actualité, prix, date…), base-toi sur ces sources plutôt que sur tes connaissances. Cite tes sources si utile.` }
                 ];
-                const reply = await queryLLM(messagesPayload);
-                return { reply, images: (images && images.length) ? images : null };
+                const reply2 = await queryLLM(messagesPayload);
+                return { reply: reply2, images: (images && images.length) ? images : null };
             }
-            // Pas de résultat web : on répond quand même (sans images).
-            const reply = await queryLLM(messagesPayload || [
-                ...baseMessages,
-                { role: 'user', content: userText }
-            ]);
+            // Pas de résultat web : on répond avec ce qu'on a (sans images).
             return { reply, images: null };
         }
 
