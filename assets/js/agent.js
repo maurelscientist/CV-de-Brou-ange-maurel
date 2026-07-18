@@ -1101,6 +1101,12 @@
         const s = String(q || '').trim();
         if (s.length < 3) return false;
         const sl = s.toLowerCase();
+        // EXCLUSION DES CONCEPTS ABSTRAITS : on n'affiche JAMAIS d'image
+        // pour les notions non visuelles (politique, philosophie, économie,
+        // société, religion, science pure, émotions, etc.). Ces mots
+        // déclenchent trop souvent des images non pertinentes en conversation.
+        const ABSTRACT = /^(la|le|les|une|un|des|mon|ma|mes|ton|ta|tes|son|sa|ses|leur|leurs|notre|nos|votre|vos)?\s*(politique|politiques|philosophie|philosophiques|économie|economie|société|societe|sociologie|religion|spiritualité|spiritualite|science|sciences|mathématiques|mathematiques|histoire|géographie|geographie|psychologie|émotion|emotion|émotions|sentiment|sentiments|morale|ethique|éthique|culture|cultures|art|arts|littérature|litterature|musique|sport|sports|éducation|education|formation|travail|emploi|amour|haine|paix|guerre|guerres|démocratie|democratie|justice|liberté|liberte|égalité|egalite|famille|santé|sante|santé|bio|environnement|écologie|ecologie|climat|développement|developpement|technologie|technologies|internet|web|numérique|numerique|informatique|programmation|code|données|donnees|intelligence artificielle|ia)\b/i;
+        if (ABSTRACT.test(sl)) return false;
         // EXCLUSION DES SUJETS LOCAUX : aucune image web pour Maurel, ses
         // projets, Lynda, le CV, le contact… (voir isEntityQuery). Les images
         // de soutien ne doivent pas apparaître pour ces sujets déjà documentés.
