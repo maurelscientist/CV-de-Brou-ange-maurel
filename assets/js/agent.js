@@ -111,6 +111,15 @@
     const trigger = document.getElementById('agentTrigger');
     const closeBtn = document.getElementById('agentClose');
     const messages = document.getElementById('agentMessages');
+    // Scroll intelligent : on ne force le bas que si l'utilisateur est déjà
+    // en bas (sinon on le laisse lire le haut sans le brusquer).
+    const isNearBottom = () => {
+        const threshold = 60;
+        return messages.scrollHeight - messages.scrollTop - messages.clientHeight <= threshold;
+    };
+    const smartScroll = () => {
+        if (isNearBottom()) messages.scrollTop = messages.scrollHeight;
+    };
     const form = document.getElementById('agentForm');
     const input = document.getElementById('agentInput');
     const quick = document.getElementById('agentQuick');
@@ -305,7 +314,7 @@
                 wireCodeBlocks(el);
             }
         });
-        messages.scrollTop = messages.scrollHeight;
+        smartScroll();
     };
     newConversation();
 
@@ -620,7 +629,7 @@
             wireUserActions(el);
         }
         messages.appendChild(el);
-        messages.scrollTop = messages.scrollHeight;
+        smartScroll();
         return el;
     };
 
@@ -775,7 +784,7 @@
             el.appendChild(cap);
         }
         messages.appendChild(el);
-        messages.scrollTop = messages.scrollHeight;
+        smartScroll();
         return el;
     };
 
@@ -799,12 +808,12 @@
             i += step;
             if (i >= plain.length) {
                 el.innerHTML = html;
-                messages.scrollTop = messages.scrollHeight;
+                smartScroll();
                 if (done) done();
                 return;
             }
             el.textContent = plain.slice(0, i);
-            messages.scrollTop = messages.scrollHeight;
+            smartScroll();
             requestAnimationFrame(tick);
         };
         requestAnimationFrame(tick);
@@ -833,7 +842,7 @@
         // Insère en bas (après le dernier message) pour suivre la discussion.
         messages.appendChild(t);
         t.classList.add('show');
-        messages.scrollTop = messages.scrollHeight;
+        smartScroll();
     };
 
     const hideTyping = () => {
