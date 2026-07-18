@@ -686,7 +686,7 @@
         hideWelcome();
         state.busy = true;
         showTyping();
-        const thinkDelay = 400 + Math.random() * 800;
+        const thinkDelay = 150 + Math.random() * 350;
         await new Promise(r => setTimeout(r, thinkDelay));
         // Pas de bulle vide ici (voir send()) : finishReply() la crée si besoin.
         const reply = await respond(query, { skipUserPush: true });
@@ -783,17 +783,17 @@
     // apparaît en une fois, sans animation caractère par caractère.
     // Effet de frappe progressive (typewriter) : le texte apparaît
     // caractère par caractère pour éviter un long temps d'attente muet.
+    // Borné à ~2 s maximum quelle que soit la longueur du texte.
     const renderInstant = (el, text, done) => {
         const html = formatText(text);
-        // On parse le HTML en texte brut pour défiler proprement, puis on
-        // réinjecte le HTML final à la fin (les réponses de Lynda sont du
-        // texte simple, éventuellement avec des sauts de ligne).
         const tmp = document.createElement('div');
         tmp.innerHTML = html;
         const plain = tmp.textContent || '';
         el.textContent = '';
         let i = 0;
-        const step = Math.max(1, Math.round(plain.length / 220)); // ~vitesse adaptative
+        // ~120 images par seconde (requestAnimationFrame) -> on calcule un
+        // pas pour que la durée totale reste sous ~2 s.
+        const step = Math.max(1, Math.ceil(plain.length / 120));
         const tick = () => {
             if (state.aborted) { el.innerHTML = html; if (done) done(); return; }
             i += step;
@@ -2590,7 +2590,7 @@ pre{white-space:pre-wrap;background:#f6faf7;border:1px solid #cfe9d8;padding:16p
         state.busy = true;
         showTyping();
 
-        const thinkDelay = 500 + Math.random() * 1200;
+        const thinkDelay = 150 + Math.random() * 350;
         await new Promise(r => setTimeout(r, thinkDelay));
 
         // NB : on ne crée PAS de bulle vide ici. respond() crée sa propre
