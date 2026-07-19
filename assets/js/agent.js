@@ -1997,6 +1997,30 @@ Utilise ces composants quand ils améliorent la clarté. Reste naturelle et n'en
         return recent;
     };
 
+    /* ---------- Comptage du nombre d'images demandé ----------
+       Quand l'utilisateur demande EXPLICITEMENT des images (intention
+       genimage), on honore le nombre qu'il cite : "1 image" -> 1,
+       "2 images" -> 2, "trois images" -> 3… mais on plafonne à 3
+       quoi qu'il arrive (évite une avalanche de visuels). Par défaut
+       (aucun nombre précis), on renvoie 1 image. */
+    const parseImageCount = (q) => {
+        const s = String(q || '').toLowerCase();
+        // Chiffres arabes : "2 images", "3 photos"…
+        const m = s.match(/(\d+)\s*(?:image|images|photo|photos|illustration|illustrations|dessin|dessins|tableau|tableaux|peinture|peintures|portrait|portraits|affiche|affiches|visuel|visuels)/);
+        if (m) {
+            const n = parseInt(m[1], 10);
+            if (n >= 1) return Math.min(n, 3);
+        }
+        // Mots en lettres : "une image", "deux photos", "trois illustrations"…
+        if (/(une|un seul|un seule|single|one)\s*(?:image|photo|illustration|dessin|tableau|peinture|portrait|affiche|visuel)/.test(s)) return 1;
+        if (/(deux|two|paire|une paire)\s*(?:image|photo|illustration|dessin|tableau|peinture|portrait|affiche|visuel)/.test(s)) return 2;
+        if (/(trois|three)\s*(?:image|photo|illustration|dessin|tableau|peinture|portrait|affiche|visuel)/.test(s)) return 3;
+        // "plusieurs images" / "des images" / "quelques images" -> 3 (max)
+        if (/(plusieurs|quelques|des|différentes|differentes|multiples)\s*(?:image|photo|illustration|dessin|tableau|peinture|portrait|affiche|visuel)/.test(s)) return 3;
+        // Par défaut : 1 image.
+        return 1;
+    };
+
     /* ---------- Réponse principale ---------- */
     const respond = async (query, opts) => {
         const skipUserPush = opts && opts.skipUserPush;
@@ -2015,6 +2039,8 @@ Utilise ces composants quand ils améliorent la clarté. Reste naturelle et n'en
                     .replace(/^(de|du|des|de la|de l')\s*/i, '')
                     .trim();
                 const subject = prompt || query;
+                // Nombre d'images demandé (1 par défaut, plafonné à 3).
+                const imgCount = parseImageCount(query);
                 // Si c'est une PERSONNE, on force Wikipedia (portraits officiels).
                 const ent = isEntityQuery(query);
                 const imgType = ent && ent.kind === 'person' ? 'person' : null;
@@ -2023,8 +2049,9 @@ Utilise ces composants quand ils améliorent la clarté. Reste naturelle et n'en
                 try {
                     // 1) On tire d'abord les images réelles du web (Wikipedia
                     //    pour les personnes, Pexels sinon) plutôt que de les
-                    //    générer artificiellement.
-                    const webImages = await searchImages(subject, 3, imgType);
+                    //    générer artificiellement. On demande imgCount images
+                    //    (jamais plus de 3).
+                    const webImages = await searchImages(subject, imgCount, imgType);
                     if (webImages && webImages.length) {
                         imgEl.remove(); // on retire l'indicateur de chargement
                         webImages.forEach((im, i) => {
@@ -2036,32 +2063,41 @@ Utilise ces composants quand ils améliorent la clarté. Reste naturelle et n'en
                         return { handled: true };
                     }
                     // 2) Repli : génération IA (Pollinations) si le web ne
-                    //    renvoie rien.
-                    const src = await generateImage(subject);
-                    if (src) {
+                    //    renvoie rien. On génère imgCount images (max 3).
+                    const srcs = await Promise.all(
+                        Array.from({ length: imgCount }, () => generateImage(subject))
+                    );
+                    const valid = srcs.filter(Boolean);
+                    if (valid.length) {
                         const ph = imgEl.querySelector('.ai-agent__gen-img-loading');
                         if (ph) {
-                            const wrap = document.createElement('div');
-                            wrap.className = 'ai-agent__gen-img-wrap';
-                            const img = document.createElement('img');
-                            img.className = 'ai-agent__gen-img';
-                            img.src = src;
-                            img.alt = 'Image générée par Lynda';
-                            img.loading = 'lazy';
-                            const mark = document.createElement('span');
-                            mark.className = 'ai-agent__gen-watermark';
-                            mark.textContent = 'L';
-                            mark.title = 'Image générée par Lynda';
-                            wrap.appendChild(img);
-                            wrap.appendChild(mark);
-                            ph.replaceWith(wrap);
+                            // On remplace l'indicateur par autant d'images
+                            // générées que demandé (max 3).
+                            const frag = document.createDocumentFragment();
+                            valid.forEach((src) => {
+                                const wrap = document.createElement('div');
+                                wrap.className = 'ai-agent__gen-img-wrap';
+                                const img = document.createElement('img');
+                                img.className = 'ai-agent__gen-img';
+                                img.src = src;
+                                img.alt = 'Image générée par Lynda';
+                                img.loading = 'lazy';
+                                const mark = document.createElement('span');
+                                mark.className = 'ai-agent__gen-watermark';
+                                mark.textContent = 'L';
+                                mark.title = 'Image générée par Lynda';
+                                wrap.appendChild(img);
+                                wrap.appendChild(mark);
+                                frag.appendChild(wrap);
+                            });
+                            ph.replaceWith(frag);
                         } else {
-                            const img = imgEl.querySelector('img');
-                            if (img) img.src = src;
+                            const imgs = imgEl.querySelectorAll('img');
+                            valid.forEach((src, i) => { if (imgs[i]) imgs[i].src = src; });
                         }
                         imgEl.querySelector('.ai-agent__gen-img-cap').textContent =
-                            '🖼️ Image générée par Lynda (IA) : ' + subject;
-                        const capTxt = '🖼️ Image générée : ' + subject;
+                            '🖼️ ' + valid.length + ' image(s) générée(s) par Lynda (IA) : ' + subject;
+                        const capTxt = '🖼️ ' + valid.length + ' image(s) générée(s) : ' + subject;
                         pushMsg('assistant', capTxt);
                         if (streamEl) streamEl.textContent = capTxt;
                         return { handled: true };
