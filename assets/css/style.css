@@ -5518,3 +5518,29 @@ video {
     color: #fff;
 }
 .ai-suggestion:active { transform: scale(.96); }
+
+/* ---------- Bouton de téléchargement du CV (intention cv) ---------- */
+.ai-cv__actions {
+    margin-top: 12px;
+}
+.ai-cv__download {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 18px;
+    border: 1px solid #c0392b;
+    border-radius: 12px;
+    background: #c0392b;
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform .2s var(--transition), background .2s var(--transition), box-shadow .2s var(--transition);
+}
+.ai-cv__download:hover {
+    transform: translateY(-2px);
+    background: #a93226;
+    box-shadow: 0 6px 18px rgba(192, 57, 43, 0.35);
+}
+.ai-cv__download:active { transform: scale(.97); }

@@ -985,6 +985,12 @@
             if (!city) city = 'Abidjan'; // défaut : ville de l'utilisateur
             return { action: 'weather', payload: city };
         }
+        // Demande de CV : "donne moi le CV de Brou Maurel", "télécharge le CV",
+        // "ton CV", "CV de Brou Ange-Maurel"…
+        if (/(cv|curriculum|curriculum vitae|résumé|resume)\b/i.test(s)
+            && /(brou|maurel|ange|ange[- ]maurel|ton|votre|le|la|un|une|mon|ma|télécharge|telecharge|télécharger|telecharger|donne|donne[- ]moi|envoie|envoi|montre|voir|consulte|téléchargements|telechargements)/.test(s)) {
+            return { action: 'cv' };
+        }
         return null;
     };
 
@@ -2147,6 +2153,27 @@ Utilise ces composants quand ils améliorent la clarté. Reste naturelle et n'en
                     pushMsg('assistant', fb);
                     return fb;
                 }
+            }
+            if (intent.action === 'cv') {
+                if (!skipUserPush) { const uEntry = pushMsg('user', query); addMessage(query, 'user', uEntry.id); }
+                const cvEl = addMessage('', 'bot');
+                cvEl.classList.add('ai-msg--cv');
+                const nom = (K.cv && K.cv.nomFichier) || 'CV.pdf';
+                const content = cvEl.querySelector('.ai-msg__content');
+                content.innerHTML = formatText(
+                    "📄 Voici mon CV ! Cliquez sur le bouton ci-dessous pour le télécharger."
+                );
+                const wrap = document.createElement('div');
+                wrap.className = 'ai-cv__actions';
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'ai-cv__download';
+                btn.innerHTML = '<i class="bi bi-download"></i> Télécharger le CV (' + nom + ')';
+                btn.addEventListener('click', () => { try { downloadCV(); } catch (e) { window.open((K.cv && K.cv.chemin) || 'CV/BROU ANGE-MAUREL.pdf', '_blank'); } });
+                wrap.appendChild(btn);
+                content.appendChild(wrap);
+                pushMsg('assistant', 'CV proposé au téléchargement : ' + nom);
+                return { handled: true };
             }
         }
 
