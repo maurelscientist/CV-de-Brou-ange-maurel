@@ -5222,9 +5222,69 @@ video {
     font-family: 'JetBrains Mono', monospace;
     font-size: 12.5px;
     line-height: 1.6;
-    color: #e6e6e6;
+    color: #ffffff; /* texte blanc par défaut pour rester lisible sur fond sombre */
     white-space: pre;
 }
+
+/* Forçage des couleurs claires pour les blocs de code de Lynda.
+   Le thème highlight.js (atom-one-dark) est chargé via CDN ; s'il ne se
+   charge pas (hors-ligne), le texte hériterait du noir du site et deviendrait
+   invisible sur le fond sombre du bloc. On redéfinit ici les couleurs de base
+   et des tokens pour garantir une lisibilité maximale (aucune couleur noire). */
+.ai-code .hljs,
+.ai-code pre,
+.ai-code code {
+    color: #f5f7fa !important; /* blanc cassé, jamais noir */
+    background: transparent !important;
+}
+/* Commentaires & doc */
+.ai-code .hljs-comment,
+.ai-code .hljs-quote { color: #8b95a1 !important; font-style: italic; }
+/* Mots-clés, balises, opérateurs */
+.ai-code .hljs-keyword,
+.ai-code .hljs-selector-tag,
+.ai-code .hljs-built_in,
+.ai-code .hljs-name,
+.ai-code .hljs-tag,
+.ai-code .hljs-doctag { color: #ff7eb6 !important; }
+/* Chaînes, caractères, ajouts */
+.ai-code .hljs-string,
+.ai-code .hljs-char,
+.ai-code .hljs-title,
+.ai-code .hljs-section,
+.ai-code .hljs-attribute,
+.ai-code .hljs-literal,
+.ai-code .hljs-addition,
+.ai-code .hljs-regexp { color: #9ff0b0 !important; }
+/* Nombres, symboles, métadonnées */
+.ai-code .hljs-number,
+.ai-code .hljs-symbol,
+.ai-code .hljs-bullet,
+.ai-code .hljs-link,
+.ai-code .hljs-meta,
+.ai-code .hljs-selector-id,
+.ai-code .hljs-selector-class { color: #ffcf6b !important; }
+/* Attributs, variables, types */
+.ai-code .hljs-attr,
+.ai-code .hljs-variable,
+.ai-code .hljs-type,
+.ai-code .hljs-template-variable,
+.ai-code .hljs-property { color: #ffe27a !important; }
+/* Fonctions & méthodes */
+.ai-code .hljs-function .hljs-title,
+.ai-code .hljs-title.function_,
+.ai-code .hljs-title.class_ { color: #7fd4ff !important; }
+/* Classes & constructeurs */
+.ai-code .hljs-class .hljs-title,
+.ai-code .hljs-constructor { color: #c4a7ff !important; }
+/* Paramètres de fonction */
+.ai-code .hljs-params { color: #f5f7fa !important; }
+/* Suppressions / erreurs */
+.ai-code .hljs-deletion,
+.ai-code .hljs-error { color: #ff8a8a !important; }
+/* Emphases / forts */
+.ai-code .hljs-emphasis { font-style: italic !important; }
+.ai-code .hljs-strong { font-weight: 700 !important; }
 
 @media (prefers-reduced-motion: reduce) {
     .agent-trigger__pulse,
